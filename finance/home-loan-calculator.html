@@ -1,1 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Loan Calculator | 1Utility</title>
 
+<style>
+:root{
+  --bg:#070A12;
+  --card:#0F1A2E;
+  --text:#E5E7EB;
+  --muted:#94A3B8;
+  --primary:#4F46E5;
+  --accent:#22C55E;
+  --border:rgba(255,255,255,0.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+
+body{
+  background: radial-gradient(circle at top,#0B1220,#070A12);
+  color:var(--text);
+}
+
+header{
+  text-align:center;
+  padding:40px 20px;
+}
+
+h1{
+  background:linear-gradient(90deg,#fff,#4F46E5,#22C55E);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background: linear-gradient(145deg,var(--card),#0b1220);
+  border:1px solid var(--border);
+  padding:24px;
+  border-radius:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+}
+
+label{font-size:12px;color:var(--muted);}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#0B1220;
+  color:white;
+}
+
+button{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:linear-gradient(90deg,#4F46E5,#22C55E);
+  color:white;
+  font-weight:bold;
+}
+
+.results{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:12px;
+}
+
+.box{
+  background:#0B1220;
+  border:1px solid var(--border);
+  padding:16px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.highlight{
+  border-color:var(--primary);
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Home Loan / Mortgage Calculator</h1>
+<p style="color:#94A3B8">Plan your property financing smartly</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<div class="grid">
+  <div>
+    <label>Loan Amount</label>
+    <input id="p" type="number" value="3000000">
+  </div>
+
+  <div>
+    <label>Interest Rate (%)</label>
+    <input id="r" type="number" value="8.5">
+  </div>
+
+  <div>
+    <label>Tenure (Years)</label>
+    <input id="n" type="number" value="20">
+  </div>
+</div>
+
+<button onclick="calc()">Calculate EMI</button>
+
+<div class="results" id="out"></div>
+
+</div>
+
+</div>
+
+<script>
+function calc(){
+  let P=+document.getElementById("p").value;
+  let r=+document.getElementById("r").value/12/100;
+  let n=+document.getElementById("n").value*12;
+
+  let emi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  let total=emi*n;
+  let interest=total-P;
+
+  document.getElementById("out").innerHTML=`
+    <div class="box highlight">
+      <h3>Monthly EMI</h3>
+      <p>₹ ${Math.round(emi).toLocaleString()}</p>
+    </div>
+
+    <div class="box">
+      <h3>Total Payment</h3>
+      <p>₹ ${Math.round(total).toLocaleString()}</p>
+    </div>
+
+    <div class="box">
+      <h3>Total Interest</h3>
+      <p>₹ ${Math.round(interest).toLocaleString()}</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
