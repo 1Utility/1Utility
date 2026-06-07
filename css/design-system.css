@@ -1,1 +1,15 @@
+:root {
+  --bg:#070A12;
+  --card:#0F1A2E;
+  --text:#E5E7EB;
+  --muted:#94A3B8;
+  --primary:#4F46E5;
+  --accent:#22C55E;
+  --border:rgba(255,255,255,0.08);
+}
 
+body{
+  background: radial-gradient(circle at top, #111827, #070A12);
+  color:var(--text);
+  font-family: Arial, sans-serif;
+}
