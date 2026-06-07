@@ -8,14 +8,14 @@
 
 <style>
 :root{
-  --bg1:#050b18;
-  --bg2:#071a33;
-  --card:rgba(255,255,255,0.06);
+  --bg1:#050814;
+  --bg2:#0a1024;
+  --card:rgba(255,255,255,0.05);
   --text:#e5e7eb;
-  --muted:#94a3b8;
-  --accent:#38bdf8;
-  --accent2:#60a5fa;
-  --border:rgba(255,255,255,0.10);
+  --muted:#9aa4b2;
+  --accent:#4f46e5;
+  --accent2:#06b6d4;
+  --border:rgba(255,255,255,0.08);
 }
 
 *{
@@ -29,8 +29,8 @@ body{
   min-height:100vh;
   color:var(--text);
   background:
-    radial-gradient(circle at top,#0ea5e9 0%,transparent 40%),
-    radial-gradient(circle at bottom,#1d4ed8 0%,transparent 45%),
+    radial-gradient(circle at top, rgba(79,70,229,0.25), transparent 40%),
+    radial-gradient(circle at bottom, rgba(6,182,212,0.18), transparent 45%),
     linear-gradient(180deg,var(--bg1),var(--bg2));
 }
 
@@ -42,7 +42,7 @@ header{
 
 h1{
   font-size:2.4rem;
-  background:linear-gradient(90deg,#38bdf8,#60a5fa,#a5b4fc);
+  background:linear-gradient(90deg,#c7d2fe,#4f46e5,#06b6d4);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
@@ -77,13 +77,14 @@ header p{
   gap:16px;
 }
 
-/* INPUTS */
+/* LABEL */
 label{
   font-size:12px;
   color:var(--muted);
   letter-spacing:0.5px;
 }
 
+/* INPUT */
 input{
   width:100%;
   padding:12px;
@@ -97,8 +98,8 @@ input{
 }
 
 input:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(56,189,248,0.15);
+  border-color:var(--accent2);
+  box-shadow:0 0 0 3px rgba(6,182,212,0.15);
 }
 
 /* BUTTON */
@@ -111,13 +112,13 @@ button{
   cursor:pointer;
   font-weight:bold;
   color:white;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
   transition:0.2s;
 }
 
 button:hover{
   transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(56,189,248,0.25);
+  box-shadow:0 10px 25px rgba(6,182,212,0.25);
 }
 
 /* RESULTS */
@@ -154,8 +155,8 @@ button:hover{
 }
 
 .highlight{
-  border-color:var(--accent);
-  background:rgba(56,189,248,0.08);
+  border-color:var(--accent2);
+  background:rgba(6,182,212,0.08);
 }
 
 /* MOBILE */
