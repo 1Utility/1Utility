@@ -1,29 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EMI Calculator | 1Utility</title>
+
 <style>
 :root{
-  --bg1:#050816;
-  --bg2:#0a1a2f;
+  --bg1:#050b18;
+  --bg2:#071a33;
   --card:rgba(255,255,255,0.06);
   --text:#e5e7eb;
   --muted:#94a3b8;
   --accent:#38bdf8;
   --accent2:#60a5fa;
-  --border:rgba(255,255,255,0.08);
+  --border:rgba(255,255,255,0.10);
 }
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
 
 body{
+  min-height:100vh;
+  color:var(--text);
   background:
     radial-gradient(circle at top,#0ea5e9 0%,transparent 40%),
     radial-gradient(circle at bottom,#1d4ed8 0%,transparent 45%),
     linear-gradient(180deg,var(--bg1),var(--bg2));
-  color:var(--text);
 }
 
-/* header */
+/* HEADER */
 header{
   text-align:center;
-  padding:40px 20px;
+  padding:45px 20px 25px;
 }
 
 h1{
@@ -33,25 +47,37 @@ h1{
   -webkit-text-fill-color:transparent;
 }
 
-/* container */
-.container{max-width:900px;margin:auto;padding:20px;}
+header p{
+  color:var(--muted);
+  margin-top:6px;
+  font-size:14px;
+}
 
+/* CONTAINER */
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+/* CARD */
 .card{
   background:var(--card);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
   border:1px solid var(--border);
-  padding:26px;
   border-radius:20px;
+  padding:26px;
   box-shadow:0 20px 60px rgba(0,0,0,0.4);
 }
 
-/* inputs */
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:16px;
 }
 
+/* INPUTS */
 label{
   font-size:12px;
   color:var(--muted);
@@ -62,18 +88,20 @@ input{
   width:100%;
   padding:12px;
   margin-top:6px;
-  border-radius:10px;
+  border-radius:12px;
   border:1px solid var(--border);
-  background:rgba(0,0,0,0.3);
+  background:rgba(0,0,0,0.35);
   color:white;
   outline:none;
+  transition:0.2s;
 }
 
 input:focus{
   border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(56,189,248,0.15);
 }
 
-/* button */
+/* BUTTON */
 button{
   width:100%;
   margin-top:20px;
@@ -89,15 +117,15 @@ button{
 
 button:hover{
   transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(56,189,248,0.3);
+  box-shadow:0 10px 25px rgba(56,189,248,0.25);
 }
 
-/* results */
+/* RESULTS */
 .results{
-  margin-top:20px;
+  margin-top:22px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:12px;
+  gap:14px;
 }
 
 .box{
@@ -106,13 +134,102 @@ button:hover{
   padding:16px;
   border-radius:14px;
   text-align:center;
+  transition:0.2s;
 }
 
-.box h3{font-size:12px;color:var(--muted);}
-.box p{font-size:18px;margin-top:6px;}
+.box:hover{
+  transform:translateY(-3px);
+}
+
+.box h3{
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:0.5px;
+}
+
+.box p{
+  font-size:18px;
+  margin-top:6px;
+  font-weight:bold;
+}
 
 .highlight{
   border-color:var(--accent);
+  background:rgba(56,189,248,0.08);
 }
 
+/* MOBILE */
+@media(max-width:600px){
+  h1{font-size:2rem;}
+  .card{padding:18px;}
+}
 </style>
+</head>
+
+<body>
+
+<header>
+  <h1>EMI Calculator</h1>
+  <p>Smart Loan Planning Tool · 1Utility Finance</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+
+    <div class="grid">
+      <div>
+        <label>Loan Amount</label>
+        <input id="p" type="number" value="1000000">
+      </div>
+
+      <div>
+        <label>Interest Rate (%)</label>
+        <input id="r" type="number" value="8.5">
+      </div>
+
+      <div>
+        <label>Tenure (Years)</label>
+        <input id="n" type="number" value="20">
+      </div>
+    </div>
+
+    <button onclick="calc()">Calculate EMI</button>
+
+    <div class="results" id="out"></div>
+
+  </div>
+
+</div>
+
+<script>
+function calc(){
+  let P = +document.getElementById("p").value;
+  let r = +document.getElementById("r").value/12/100;
+  let n = +document.getElementById("n").value*12;
+
+  let emi = P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  let total = emi*n;
+  let interest = total-P;
+
+  document.getElementById("out").innerHTML = `
+    <div class="box highlight">
+      <h3>Monthly EMI</h3>
+      <p>₹ ${Math.round(emi).toLocaleString()}</p>
+    </div>
+
+    <div class="box">
+      <h3>Total Payment</h3>
+      <p>₹ ${Math.round(total).toLocaleString()}</p>
+    </div>
+
+    <div class="box">
+      <h3>Total Interest</h3>
+      <p>₹ ${Math.round(interest).toLocaleString()}</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
