@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FD Calculator | 1Utility</title>
 
+<style>
+:root{
+  --bg:#070A12;
+  --card:#0F1A2E;
+  --text:#E5E7EB;
+  --muted:#94A3B8;
+  --primary:#4F46E5;
+  --accent:#22C55E;
+  --border:rgba(255,255,255,0.08);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+
+body{
+  background: radial-gradient(circle at top,#111827,#070A12);
+  color:var(--text);
+}
+
+header{
+  text-align:center;
+  padding:40px 20px;
+}
+
+h1{
+  background:linear-gradient(90deg,#fff,#4F46E5,#22C55E);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+
+.card{
+  background: linear-gradient(145deg,var(--card),#0b1220);
+  border:1px solid var(--border);
+  padding:24px;
+  border-radius:18px;
+  box-shadow: var(--glow);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+}
+
+label{
+  font-size:12px;
+  color:var(--muted);
+}
+
+input, select{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:#0B1220;
+  color:white;
+}
+
+button{
+  width:100%;
+  margin-top:20px;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:linear-gradient(90deg,#4F46E5,#06B6D4);
+  color:white;
+  font-weight:bold;
+  transition:0.2s;
+}
+
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(79,70,229,0.3);
+}
+
+.results{
+  margin-top:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:12px;
+}
+
+.box{
+  background:#0B1220;
+  border:1px solid var(--border);
+  padding:16px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.box h3{font-size:12px;color:var(--muted);}
+.box p{font-size:18px;margin-top:6px;}
+.highlight{border-color:var(--accent);}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Fixed Deposit Calculator</h1>
+<p style="color:#94A3B8">Grow your savings safely</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<div class="grid">
+  <div>
+    <label>Principal Amount</label>
+    <input id="p" type="number" value="500000">
+  </div>
+
+  <div>
+    <label>Interest Rate (%)</label>
+    <input id="r" type="number" value="7.5">
+  </div>
+
+  <div>
+    <label>Time (Years)</label>
+    <input id="t" type="number" value="3">
+  </div>
+
+  <div>
+    <label>Compounding</label>
+    <select id="c">
+      <option value="4">Quarterly</option>
+      <option value="12">Monthly</option>
+      <option value="2">Half-Yearly</option>
+      <option value="1">Yearly</option>
+    </select>
+  </div>
+</div>
+
+<button onclick="calc()">Calculate FD</button>
+
+<div class="results" id="out"></div>
+
+</div>
+
+</div>
+
+<script>
+function calc(){
+  let P = +document.getElementById("p").value;
+  let r = +document.getElementById("r").value/100;
+  let t = +document.getElementById("t").value;
+  let n = +document.getElementById("c").value;
+
+  let A = P * Math.pow((1 + r/n), n*t);
+  let interest = A - P;
+
+  document.getElementById("out").innerHTML = `
+    <div class="box highlight">
+      <h3>Maturity Amount</h3>
+      <p>₹ ${Math.round(A).toLocaleString()}</p>
+    </div>
+
+    <div class="box">
+      <h3>Interest Earned</h3>
+      <p>₹ ${Math.round(interest).toLocaleString()}</p>
+    </div>
+
+    <div class="box">
+      <h3>Total Return</h3>
+      <p>${((interest/P)*100).toFixed(1)}%</p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
